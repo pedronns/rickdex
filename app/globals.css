@@ -1,8 +1,15 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+}
+
+@theme {
+  --color-brand-deep: #111827;
+  --color-brand-dark: #1f2937;
+  --color-brand-primary: #ccdac5;
+  --color-brand-soft: #e5e7eb;
 }
 
 @theme inline {
