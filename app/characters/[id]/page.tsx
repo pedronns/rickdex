@@ -3,8 +3,10 @@ import Image from 'next/image'
 import type { Character } from '@/types/character'
 import {
   genderTranslation,
-  locationTranslation,
+  translateLocationName,
   originTranslation,
+  speciesTranslation,
+  statusTranslation,
   statusColor,
 } from '@/lib/translations/pt'
 
@@ -29,26 +31,14 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
     next: { revalidate: 60 },
   }).then((res) => res.json())
 
-  const statusTranslation: Record<Character['status'], string> = {
-    Alive: 'Vivo',
-    Dead: 'Morto',
-    unknown: 'Desconhecido',
-  }
-
-  const speciesTranslation: Record<string, string> = {
-    Human: 'Humano',
-    Robot: 'Robô',
-    Alien: 'Alienígena',
-  }
-
   const createdDate = character.created
     ? new Date(character.created).toLocaleDateString('pt-BR')
     : 'Desconhecida'
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-slate-900 via-slate-950 to-black text-white px-6 py-12">
+    <div className="min-h-screen px-6 py-12">
       <div className="max-w-4xl mx-auto">
-        <div className="backdrop-blur-sm bg-white/5 rounded-3xl p-6 md:p-10 shadow-2xl border border-white/6 overflow-hidden">
+        <div className="backdrop-blur-sm bg-white/5 rounded-3xl p-6 md:p-10 shadow-2xl border border-white/6 overflow-hidden mb-12">
           <div className="flex flex-col md:flex-row gap-6 items-start">
             <div className="w-full md:w-1/3 shrink-0">
               <div className="relative">
@@ -76,7 +66,7 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
                 <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">
                   {character.name}
                 </h1>
-                <p className="text-sm text-brand-soft mt-1">
+                <p className="text-sm t mt-1">
                   {speciesTranslation[character.species] || character.species}
                 </p>
               </div>
@@ -89,7 +79,7 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
                 >
                   {statusTranslation[character.status]}
                 </span>
-                <span className="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/6 text-gray-200">
+                <span className="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/6 ">
                   {originTranslation[character.origin?.name] ||
                     character.origin?.name}
                 </span>
@@ -97,15 +87,15 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
 
               <div className="mt-6 grid grid-cols-2 gap-4">
                 <div className="bg-white/3 p-4 rounded-lg">
-                  <p className="text-xs text-gray-300">Localização</p>
-                  <p className="font-semibold text-white">
-                    {locationTranslation[character.location?.name] ||
+                  <p className="text-xs">Localização</p>
+                  <p className="font-semibold ">
+                    {translateLocationName(character.location?.name) ||
                       character.location?.name}
                   </p>
                 </div>
                 <div className="bg-white/3 p-4 rounded-lg">
-                  <p className="text-xs text-gray-300">Episódios</p>
-                  <p className="font-semibold text-white">
+                  <p className="text-xs ">Episódios</p>
+                  <p className="font-semibold ">
                     {character.episode?.length || 0}
                   </p>
                 </div>
@@ -117,59 +107,67 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
                 </h2>
                 <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="bg-white/3 p-4 rounded-lg">
-                    <p className="text-xs text-gray-300">Espécie</p>
-                    <p className="font-semibold text-white">
+                    <p className="text-xs ">Espécie</p>
+                    <p className="font-semibold">
                       {speciesTranslation[character.species] ||
                         character.species}
                     </p>
                   </div>
 
                   <div className="bg-white/3 p-4 rounded-lg">
-                    <p className="text-xs text-gray-300">Gênero</p>
-                    <p className="font-semibold text-white">
+                    <p className="text-xs ">Gênero</p>
+                    <p className="font-semibold ">
                       {genderTranslation[character.gender] || character.species}
                     </p>
                   </div>
 
                   <div className="bg-white/3 p-4 rounded-lg">
-                    <p className="text-xs text-gray-300">Tipo</p>
-                    <p className="font-semibold text-white">
-                      {character.type || 'N/A'}
-                    </p>
+                    <p className="text-xs ">Tipo</p>
+                    <p className="font-semibold ">{character.type || 'N/A'}</p>
                   </div>
 
                   <div className="bg-white/3 p-4 rounded-lg">
-                    <p className="text-xs text-gray-300">Criado em</p>
-                    <p className="font-semibold text-white">{createdDate}</p>
+                    <p className="text-xs ">Criado em</p>
+                    <p className="font-semibold ">{createdDate}</p>
                   </div>
                 </div>
 
-                <p className="mt-4 text-sm text-gray-300">
+                <p className="mt-4 text-sm ">
                   Aparições:{' '}
-                  <span className="font-semibold text-white">
+                  <span className="font-semibold ">
                     {character.episode?.length || 0}
                   </span>
                 </p>
 
                 <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <div className="text-xs text-gray-300">
+                  <div className="text-xs ">
                     <p className="text-xs">Primeira aparição</p>
-                    <p className="font-semibold text-white">
-                      {firstAparison?.episode}{' • '}
-                      {firstAparison?.name} 
+                    <p className="font-semibold ">
+                      {firstAparison?.episode}
+                      {' • '}
+                      {firstAparison?.name}
                     </p>
                   </div>
-                  <div className="text-xs text-gray-300">
+                  <div className="text-xs">
                     <p className="text-xs">Última aparição</p>
-                    <p className="font-semibold text-white">
-                      {latestAparison?.episode}{' • '}
-                      {latestAparison?.name} 
+                    <p className="font-semibold ">
+                      {latestAparison?.episode}
+                      {' • '}
+                      {latestAparison?.name}
                     </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div className="text-center">
+          <a
+            href={`/characters?page=${Math.ceil(character.id / 20)}`}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:opacity-90 transition-opacity"
+          >
+            ← Voltar para Personagens
+          </a>
         </div>
       </div>
     </div>
