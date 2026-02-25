@@ -25,7 +25,6 @@ npm install
   - `app/characters/` — listagens e detalhes de personagens
 - `components/` — componentes reutilizáveis (Navbar, UI)
 - `lib/` — utilitários
-- `service/` — helpers de fetch/requests
 - `types/` — definições TypeScript
 
 ## Observações
