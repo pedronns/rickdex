@@ -11,7 +11,7 @@ import {
   WavesLadderIcon,
   BedIcon,
 } from "lucide-react"
-import { JSXElementConstructor, ReactNode } from 'react'
+import { ReactNode } from 'react'
 
 interface LocationPageProps {
   params: Promise<{ id: string }>
