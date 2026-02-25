@@ -1,9 +1,9 @@
-import type { Location, LocationResponse } from '@/types/location'
+import type { Episode, EpisodeResponse } from '@/types/episode'
+import { translateEpisodeCode } from './../../lib/translations/pt'
 import Link from 'next/link'
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationFirst,
   PaginationItem,
   PaginationLast,
@@ -11,11 +11,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
-import {
-  locationTypeTranslation,
-  translateDimensionName,
-  translateLocationName,
-} from '@/lib/translations/pt'
+
 import RandomPage from '@/components/RandomPage'
 
 type Props = {
@@ -24,13 +20,13 @@ type Props = {
   }>
 }
 
-export default async function Page({ searchParams }: Props) {
+export default async function Episode({ searchParams }: Props) {
   const params = await searchParams
 
   const currentPage = Number(params.page ?? 1)
 
-  const data: LocationResponse = await fetch(
-    `https://rickandmortyapi.com/api/location?page=${currentPage}`,
+  const data: EpisodeResponse = await fetch(
+    `https://rickandmortyapi.com/api/episode?page=${currentPage}`,
   ).then((res) => res.json())
 
   const totalPages = data.info.pages
@@ -51,20 +47,20 @@ export default async function Page({ searchParams }: Props) {
     <div className="px-6 py-12">
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
-          <h1 className="text-5xl font-bold mb-2 text-center">Locais</h1>
+          <h1 className="text-5xl font-bold mb-2 text-center">Episódios</h1>
           {currentPage > 1 && (
             <p className="text-center text-muted-foreground text-lg">
               Página {currentPage} de {totalPages}
             </p>
           )}
-          <RandomPage pageType="location" />
+          <RandomPage pageType="episode" />
         </div>
 
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-          {data.results.map((location: Location) => (
+          {data.results.map((episode: Episode) => (
             <Link
-              href={`/locations/${location.id}`}
-              key={location.id}
+              href={`/episodes/${episode.id}`}
+              key={episode.id}
               className="group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:scale-105 bg-card border border-border hover:border- shadow-lg hover:shadow-xl"
             >
               <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -72,38 +68,27 @@ export default async function Page({ searchParams }: Props) {
               <div className="relative z-10 space-y-4">
                 <div className="space-y-2">
                   <h2 className="text-2xl font-bold group-hover:text-primary transition-colors">
-                    {translateLocationName(location.name)}
+                    {episode.name}
                   </h2>
+                  <p className="text-s text-muted-foreground">
+                    {translateEpisodeCode(episode.episode)}
+                  </p>
                 </div>
 
                 <div className="space-y-3 pt-2">
-                  {location.type && (
-                    <div className="flex items-start gap-3">
-                      <span className="text-sm font-semibold text-muted-foreground min-w-fit">
-                        Tipo:
-                      </span>
-                      <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary">
-                        {locationTypeTranslation[location.type] ||
-                          location.type}
-                      </span>
-                    </div>
-                  )}
-
-                  {location.dimension && (
-                    <div className="flex items-start gap-3">
-                      <span className="text-sm font-semibold text-muted-foreground min-w-fit">
-                        Dimensão:
-                      </span>
-                      <span className="text-sm text-foreground/80">
-                        {translateDimensionName(location.dimension)}
-                      </span>
-                    </div>
-                  )}
+                  <div className="flex items-start gap-3">
+                    <span className="text-sm font-semibold text-muted-foreground min-w-fit">
+                      Lançamento:
+                    </span>
+                    <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary">
+                      {episode.air_date}
+                    </span>
+                  </div>
                 </div>
 
                 <div className="pt-4 border-t border-border/50">
                   <p className="text-xs text-muted-foreground">
-                    ID: {location.id}
+                    ID: {episode.id}
                   </p>
                 </div>
               </div>

@@ -1,6 +1,7 @@
 import icon from '../app/icon.png'
 import Image from 'next/image'
 import RandomPage from '@/components/RandomPage'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -18,25 +19,26 @@ export default function Home() {
           Rickdex
         </h1>
         <p className="text-lg text-zinc-600 dark:text-zinc-400">
-          Um índice limpo e moderno para os personagens de Rick & Morty
+          Um índice limpo e moderno para os personagens, locais e episódios de
+          Rick & Morty
         </p>
         <div className="mt-4 flex gap-3">
-          <RandomPage/>
-          <a
+          <Link
             href="/characters"
             className="inline-flex items-center rounded-full bg-foreground px-5 py-3 text-background font-medium hover:opacity-95"
           >
             Explorar personagens
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://github.com/pedronns/rickdex"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center rounded-full border border-black/8 px-5 py-3 text-zinc-700 dark:text-zinc-300"
           >
             Código-fonte
-          </a>
+          </Link>
         </div>
+            <RandomPage />
       </main>
     </div>
   )

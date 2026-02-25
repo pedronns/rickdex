@@ -11,6 +11,11 @@ export const statusColor: Record<string, string> = {
   unknown: 'text-gray-400',
 }
 
+// EPISODE CODE
+export function translateEpisodeCode(string: string):string {
+  return string.replace('S', 'T')
+}
+
 // SPECIES
 export const speciesTranslation: Record<string, string> = {
   Alien: 'Alienígena',
@@ -33,7 +38,7 @@ export const originTranslation: Record<string, string> = {
   unknown: 'Origem desconhecida',
 }
 
-// LOCATION - NAME
+// LOCATION
 export const locationNameBaseTranslation: Record<string, string> = {
   'Anatomy Park': 'Parque da Anatomia',
   'Bird World': 'Planeta Pássaro',
@@ -183,4 +188,5 @@ export default {
   locationTypeTranslation,
   translateLocationName,
   translateDimensionName,
+  translateEpisodeCode,
 }

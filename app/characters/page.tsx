@@ -17,6 +17,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
+import RandomPage from '@/components/RandomPage'
 
 type Props = {
   searchParams: Promise<{
@@ -60,8 +61,10 @@ export default async function Page({ searchParams }: Props) {
               Página {currentPage} de {totalPages}
             </p>
           )}
+          <RandomPage pageType="character" />
         </div>
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+
+        <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {data.results.map((char: Character) => (
             <Link
               href={`/characters/${char.id}`}

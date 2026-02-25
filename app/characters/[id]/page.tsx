@@ -41,7 +41,7 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
         <div className="backdrop-blur-sm bg-white/5 rounded-3xl p-6 md:p-10 shadow-2xl border border-white/6 overflow-hidden mb-12">
           <div className="flex flex-col md:flex-row gap-6 items-start">
             <div className="w-full md:w-1/3 shrink-0">
-              <div className="relative">
+              <div className="relative flex flex-col items-center md:block">
                 {character.image ? (
                   <Image
                     className="w-56 h-56 md:w-64 md:h-64 rounded-2xl object-cover transition-transform hover:scale-105"
@@ -57,7 +57,14 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
                   </div>
                 )}
 
-                <span className="absolute -bottom-3 left-3 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-linear-to-r from-indigo-500 to-pink-500 text-white shadow-lg border border-white/10">
+                <span
+                  className="
+      absolute -bottom-3 left-1/2 -translate-x-1/2
+      md:left-3 md:translate-x-0
+      inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-semibold
+      bg-linear-to-r from-indigo-500 to-pink-500 text-white shadow-lg border border-white/10
+    "
+                >
                   #{id}
                 </span>
               </div>
@@ -81,6 +88,7 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
                 </span>
                 <span className="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/6 ">
                   {originTranslation[character.origin?.name] ||
+                    translateLocationName(character.origin?.name) ||
                     character.origin?.name}
                 </span>
               </div>
@@ -132,16 +140,9 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
                   </div>
                 </div>
 
-                <p className="mt-4 text-sm ">
-                  Aparições:{' '}
-                  <span className="font-semibold ">
-                    {character.episode?.length || 0}
-                  </span>
-                </p>
-
-                <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <div className="text-xs ">
-                    <p className="text-xs">Primeira aparição</p>
+                    <p className="mb-2">Primeira aparição</p>
                     <p className="font-semibold ">
                       {firstAparison?.episode}
                       {' • '}
@@ -149,7 +150,7 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
                     </p>
                   </div>
                   <div className="text-xs">
-                    <p className="text-xs">Última aparição</p>
+                    <p className="mb-2">Última aparição</p>
                     <p className="font-semibold ">
                       {latestAparison?.episode}
                       {' • '}

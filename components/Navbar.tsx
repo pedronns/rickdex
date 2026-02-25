@@ -12,6 +12,7 @@ export default function Navbar() {
     { href: '/', label: 'Home' },
     { href: '/characters', label: 'Personagens' },
     { href: '/locations', label: 'Locais' },
+    { href: '/episodes', label: 'Episódios' },
     { href: 'https://github.com/pedronns', label: 'Contato' },
   ]
 
