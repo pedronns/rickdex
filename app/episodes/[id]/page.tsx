@@ -1,9 +1,11 @@
-import { translateEpisodeCode } from '@/lib/translations/pt'
+import { translateEpisodeCode, statusDotColor } from '@/lib/translations/pt'
 import { Character } from '@/types/character'
-import { cache } from 'react'
 import type { Episode } from '@/types/episode'
 import Image from 'next/image'
 import Link from 'next/link'
+import { fetchCharacter } from '@/services/fetchCharacter'
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
+import { redirect } from 'next/navigation'
 
 interface EpisodePageProps {
   params: Promise<{ id: string }>
@@ -13,32 +15,30 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
   const resolvedParams = await params
   const id = resolvedParams.id
 
-  const episode: Episode = await fetch(
+  const response: Response = await fetch(
     `https://rickandmortyapi.com/api/episode/${id}`,
     { next: { revalidate: 3600 } },
-  ).then((res) => res.json())
+  )
+
+  if (!response.ok) {
+    redirect('/')
+  }
+
+  const episode: Episode = await response.json()
 
   const airDate = episode.air_date
     ? new Date(episode.air_date).toLocaleDateString('pt-BR')
     : 'Desconhecida'
 
-  const charactersCount = episode.characters.length || 0
+  const charactersCount = episode.characters?.length ?? 0
 
-  // i'm reaching rate limit sometimes, working on that
-  const fetchCharacter = cache(
-    async (url: string): Promise<Character> => {
-      const response = await fetch(url)
-      const data = await response.json()
-      return data
-    }
-  )
-
-  const characters: Character[] = []
-
-  for (const url of episode.characters) {
-    const character = await fetchCharacter(url)
-    characters.push(character)
+  function getIdFromUrl(url: string): number {
+    return Number(url.split('/').pop())
   }
+
+  const presentCharacters = episode.characters
+    .map((url) => fetchCharacter(getIdFromUrl(url)))
+    .filter(Boolean) as Character[]
 
   return (
     <div className="min-h-screen px-6 py-12">
@@ -47,9 +47,27 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
           <div className="flex items-center gap-3 mb-4">
             <div>
               <h1 className="text-5xl font-bold">{episode.name}</h1>
+
               <p className="text-muted-foreground text-lg mt-1">
                 {translateEpisodeCode(episode.episode)}
               </p>
+              <div className="flex gap-4">
+                {episode.id > 1 && (
+                  <Link
+                    href={`/episodes/${episode.id - 1}`}
+                    className="flex gap-1"
+                  >
+                    <ChevronLeftIcon />
+                    Anterior
+                  </Link>
+                )}
+                {episode.id < 51 && (
+                  <Link href={`/episodes/${episode.id + 1}`} className="flex">
+                    Próximo
+                    <ChevronRightIcon />
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -80,18 +98,24 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
               {charactersCount > 0 && (
                 <div className="bg-card border border-border rounded-2xl p-8 shadow-lg">
                   <h3 className="text-xl  font-bold mb-4">Personagens</h3>
-                  <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-                    {characters.map((char: Character) => {
+                  <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                    {presentCharacters.map((char: Character) => {
                       return (
-                        <div className="" key={char.id}>
+                        <div
+                          className="relative transition duration-300 hover:scale-105"
+                          key={char.id}
+                        >
                           <Link href={`/characters/${char.id}`}>
+                            <div
+                              className={`rounded-full absolute left-3.5 top-5 ${statusDotColor[char.status]} w-3 h-3 z-3`}
+                            />
                             <Image
-                              className="w-75 mt-2 mx-auto h-auto rounded-full transition duration-300 hover:scale-105"
-                              src={char.image}
+                              className="w-75 mt-2 mx-auto h-auto rounded-full"
+                              src={`/avatars/${char.id}.jpg`}
                               alt={char.name}
                               width={150}
-                              height={200}
-                              quality={70}
+                              height={150}
+                              quality={75}
                             />
                           </Link>
                           <p className="text-center">{char.name}</p>

@@ -1,5 +1,14 @@
-import { locationTypeTranslation, translateDimensionName, translateLocationName } from '@/lib/translations/pt'
+import {
+  locationTypeTranslation,
+  translateDimensionName,
+  translateLocationName,
+} from '@/lib/translations/pt'
+import { fetchCharacter } from '@/services/fetchCharacter'
+import { Character } from '@/types/character'
 import type { Location } from '@/types/location'
+import Image from 'next/image'
+import Link from 'next/link'
+import { statusDotColor } from '@/lib/translations/pt'
 
 import {
   MapPinIcon,
@@ -10,7 +19,7 @@ import {
   TvIcon,
   WavesLadderIcon,
   BedIcon,
-} from "lucide-react"
+} from 'lucide-react'
 import { ReactNode } from 'react'
 
 interface LocationPageProps {
@@ -47,20 +56,28 @@ export default async function LocationPage({ params }: LocationPageProps) {
 
   const getLocationTypeIcon = (type: string) => {
     const icons: Record<string, ReactNode> = {
-      Planet: <EarthIcon size={32}/>,
-      'Space station': <SatelliteIcon size={32}/>,
-      Microverse: <MicroscopeIcon size={32}/>,
-      Dimension: <StarIcon size={32}/>,
-      TV: <TvIcon size={32}/>,
-      Resort: <WavesLadderIcon size={32}/>,
-      Spa: <WavesLadderIcon size={32}/>,
-      Dream: <BedIcon size={32}/>,
-      Nightmare: <BedIcon size={32}/>,
+      Planet: <EarthIcon size={32} />,
+      'Space station': <SatelliteIcon size={32} />,
+      Microverse: <MicroscopeIcon size={32} />,
+      Dimension: <StarIcon size={32} />,
+      TV: <TvIcon size={32} />,
+      Resort: <WavesLadderIcon size={32} />,
+      Spa: <WavesLadderIcon size={32} />,
+      Dream: <BedIcon size={32} />,
+      Nightmare: <BedIcon size={32} />,
     }
-    return icons[type] || <MapPinIcon size={32}/>
+    return icons[type] || <MapPinIcon size={32} />
   }
 
-  const residentCount = location.residents?.length || 0
+  const residentsCount = location.residents?.length || 0
+
+  function getIdFromUrl(url: string): number {
+    return Number(url.split('/').pop())
+  }
+
+  const residents = location.residents
+    .map((url) => fetchCharacter(getIdFromUrl(url)))
+    .filter(Boolean) as Character[]
 
   return (
     <div className="min-h-screen px-6 py-12">
@@ -72,7 +89,9 @@ export default async function LocationPage({ params }: LocationPageProps) {
               {getLocationTypeIcon(location.type)}
             </span>
             <div>
-              <h1 className="text-5xl font-bold">{translateLocationName(location.name)}</h1>
+              <h1 className="text-5xl font-bold">
+                {translateLocationName(location.name)}
+              </h1>
               <p className="text-muted-foreground text-lg mt-1">ID: {id}</p>
             </div>
           </div>
@@ -105,7 +124,7 @@ export default async function LocationPage({ params }: LocationPageProps) {
                     Residentes
                   </p>
                   <p className="text-4xl font-bold text-primary">
-                    {residentCount}
+                    {residentsCount}
                   </p>
                 </div>
 
@@ -134,7 +153,9 @@ export default async function LocationPage({ params }: LocationPageProps) {
                       <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-1">
                         Nome
                       </p>
-                      <p className="text-lg font-semibold">{translateLocationName(location.name)}</p>
+                      <p className="text-lg font-semibold">
+                        {translateLocationName(location.name)}
+                      </p>
                     </div>
                   </div>
 
@@ -147,7 +168,7 @@ export default async function LocationPage({ params }: LocationPageProps) {
                         {getLocationTypeIcon(location.type)}
                       </span>
                       <div
-                        className={`px-4 py-2 rounded-full text-sm font-semibold text-white bg-gradient-to-r ${getLocationTypeColor(location.type)}`}
+                        className={`px-4 py-2 rounded-full text-sm font-semibold text-white bg-linear-to-r ${getLocationTypeColor(location.type)}`}
                       >
                         {locationTypeTranslation[location.type] ||
                           location.type}
@@ -167,16 +188,40 @@ export default async function LocationPage({ params }: LocationPageProps) {
               </div>
 
               {/* Residents Info */}
-              {residentCount > 0 && (
-                <div className="bg-card border border-border rounded-2xl p-8 shadow-lg">
-                  <h3 className="text-xl font-bold mb-4">Habitantes</h3>
-                  <p className="text-muted-foreground">
-                    Esta localização possui {residentCount}{' '}
-                    {residentCount === 1 ? 'residente' : 'residentes'}{' '}
-                    registrados na série Rick and Morty.
+              <div className="bg-card border border-border rounded-2xl p-8 shadow-lg">
+                <h3 className="text-xl  font-bold mb-4">Residentes</h3>
+                {residentsCount > 0 ? (
+                  <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                    {residents.map((char: Character) => {
+                      return (
+                        <div
+                          className="relative transition duration-300 hover:scale-105"
+                          key={char.id}
+                        >
+                          <Link href={`/characters/${char.id}`}>
+                            <div
+                              className={`rounded-full absolute left-3.5 top-5 ${statusDotColor[char.status]} w-3 h-3 z-3`}
+                            />
+                            <Image
+                              className="w-75 mt-2 mx-auto h-auto rounded-full"
+                              src={`/avatars/${char.id}.jpg`}
+                              alt={char.name}
+                              width={150}
+                              height={150}
+                              quality={75}
+                            />
+                          </Link>
+                          <p className="text-center">{char.name}</p>
+                        </div>
+                      )
+                    })}
+                  </div>
+                ) : (
+                  <p className="text-md text-gray-400 italic">
+                    Sem residentes para exibir
                   </p>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>

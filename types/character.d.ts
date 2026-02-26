@@ -28,3 +28,10 @@ export type Character = {
   url: string
   created: string
 }
+
+export type SimpleCharacter = {
+  id: number
+  name: string
+  image: string
+  status: string
+}

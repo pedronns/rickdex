@@ -33,7 +33,7 @@ export default async function Page({ searchParams }: Props) {
   const data: CharacterResponse = await fetch(
     `https://rickandmortyapi.com/api/character?page=${currentPage}`,
     {
-      cache: 'no-store',
+      next: { revalidate: 3600 }
     },
   ).then((res) => res.json())
 
@@ -83,12 +83,11 @@ export default async function Page({ searchParams }: Props) {
             >
               <Image
                 className="w-75 mt-2 mx-auto h-auto rounded-full"
-                src={char.image}
+                src={`/avatars/${char.id}.jpg`}
                 loading="lazy"
                 alt={char.name}
                 width={150}
                 height={200}
-                quality={70}
               />
               <p className="pt-4 text-lg font-semibold text-center">
                 {char.name}

@@ -11,6 +11,12 @@ export const statusColor: Record<string, string> = {
   unknown: 'text-gray-400',
 }
 
+export const statusDotColor: Record<string, string> = {
+  Alive: 'bg-green-500',
+  Dead: 'bg-red-500',
+  unknown: 'bg-gray-400',
+}
+
 // EPISODE CODE
 export function translateEpisodeCode(string: string):string {
   return string.replace('S', 'T')
