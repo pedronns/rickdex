@@ -1,14 +1,14 @@
-// app/character/[id]/page.tsx
 import Image from 'next/image'
 import type { Character } from '@/types/character'
+
 import {
   genderTranslation,
   translateLocationName,
   originTranslation,
   speciesTranslation,
   statusTranslation,
-  statusColor,
 } from '@/lib/translations/pt'
+import { statusColor } from '@/lib/colors'
 
 interface CharacterPageProps {
   params: Promise<{ id: string }>

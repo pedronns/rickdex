@@ -1,5 +1,5 @@
 import type { Episode, EpisodeResponse } from '@/types/episode'
-import { translateEpisodeCode } from './../../lib/translations/pt'
+import { translateEpisodeCode } from '@/lib/translations/pt'
 import Link from 'next/link'
 import {
   Pagination,
@@ -29,8 +29,9 @@ export default async function Episode({ searchParams }: Props) {
     `https://rickandmortyapi.com/api/episode?page=${currentPage}`,
   ).then((res) => res.json())
 
-  const totalPages = data.info.pages
+  const episodes = data.results
 
+  const totalPages = data.info.pages
   const startPage = Math.max(1, currentPage - 2)
   const endPage = Math.min(totalPages, startPage + 4)
 
@@ -57,7 +58,7 @@ export default async function Episode({ searchParams }: Props) {
         </div>
 
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-          {data.results.map((episode: Episode) => (
+          {episodes.map((episode: Episode) => (
             <Link
               href={`/episodes/${episode.id}`}
               key={episode.id}

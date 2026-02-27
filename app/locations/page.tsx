@@ -1,9 +1,11 @@
 import type { Location, LocationResponse } from '@/types/location'
+
 import Link from 'next/link'
+
+import RandomPage from '@/components/RandomPage'
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationFirst,
   PaginationItem,
   PaginationLast,
@@ -11,12 +13,13 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
+
 import {
   locationTypeTranslation,
   translateDimensionName,
   translateLocationName,
 } from '@/lib/translations/pt'
-import RandomPage from '@/components/RandomPage'
+
 
 type Props = {
   searchParams: Promise<{
@@ -32,6 +35,8 @@ export default async function Page({ searchParams }: Props) {
   const data: LocationResponse = await fetch(
     `https://rickandmortyapi.com/api/location?page=${currentPage}`,
   ).then((res) => res.json())
+
+  const locations = data.results
 
   const totalPages = data.info.pages
 
@@ -61,7 +66,7 @@ export default async function Page({ searchParams }: Props) {
         </div>
 
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-          {data.results.map((location: Location) => (
+          {locations.map((location: Location) => (
             <Link
               href={`/locations/${location.id}`}
               key={location.id}

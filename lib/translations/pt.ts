@@ -5,18 +5,6 @@ export const statusTranslation: Record<string, string> = {
   unknown: 'Desconhecido',
 }
 
-export const statusColor: Record<string, string> = {
-  Alive: 'text-green-400',
-  Dead: 'text-red-400',
-  unknown: 'text-gray-400',
-}
-
-export const statusDotColor: Record<string, string> = {
-  Alive: 'bg-green-500',
-  Dead: 'bg-red-500',
-  unknown: 'bg-gray-400',
-}
-
 // EPISODE CODE
 export function translateEpisodeCode(string: string):string {
   return string.replace('S', 'T')
@@ -185,7 +173,6 @@ export const locationTypeTranslation: Record<string, string> = {
 
 export default {
   statusTranslation,
-  statusColor,
   speciesTranslation,
   genderTranslation,
   originTranslation,

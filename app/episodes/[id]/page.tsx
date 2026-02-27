@@ -1,11 +1,16 @@
-import { translateEpisodeCode, statusDotColor } from '@/lib/translations/pt'
-import { Character } from '@/types/character'
-import type { Episode } from '@/types/episode'
 import Image from 'next/image'
 import Link from 'next/link'
-import { fetchCharacter } from '@/services/fetchCharacter'
-import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { redirect } from 'next/navigation'
+
+import { Character } from '@/types/character'
+import type { Episode } from '@/types/episode'
+
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
+
+import { fetchCharacter } from '@/services/fetchCharacter'
+import { translateEpisodeCode } from '@/lib/translations/pt'
+import { getIdFromUrl } from '@/lib/utils'
+import { statusDotColor } from '@/lib/colors'
 
 interface EpisodePageProps {
   params: Promise<{ id: string }>
@@ -31,10 +36,6 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
     : 'Desconhecida'
 
   const charactersCount = episode.characters?.length ?? 0
-
-  function getIdFromUrl(url: string): number {
-    return Number(url.split('/').pop())
-  }
 
   const presentCharacters = episode.characters
     .map((url) => fetchCharacter(getIdFromUrl(url)))

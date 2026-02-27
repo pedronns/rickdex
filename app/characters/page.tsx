@@ -1,12 +1,9 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 import type { Character, CharacterResponse } from '@/types/character'
-import {
-  statusTranslation,
-  speciesTranslation,
-  statusColor,
-} from '@/lib/translations/pt'
-import Link from 'next/link'
+
+import RandomPage from '@/components/RandomPage'
 import {
   Pagination,
   PaginationContent,
@@ -17,7 +14,9 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
-import RandomPage from '@/components/RandomPage'
+
+import { statusTranslation, speciesTranslation } from '@/lib/translations/pt'
+import { statusColor } from '@/lib/colors'
 
 type Props = {
   searchParams: Promise<{
@@ -33,12 +32,13 @@ export default async function Page({ searchParams }: Props) {
   const data: CharacterResponse = await fetch(
     `https://rickandmortyapi.com/api/character?page=${currentPage}`,
     {
-      next: { revalidate: 3600 }
+      next: { revalidate: 3600 },
     },
   ).then((res) => res.json())
 
-  const totalPages = data.info.pages
+  const characters = data.results
 
+  const totalPages = data.info.pages
   const startPage = Math.max(1, currentPage - 2)
   const endPage = Math.min(totalPages, startPage + 4)
 
@@ -65,7 +65,7 @@ export default async function Page({ searchParams }: Props) {
         </div>
 
         <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {data.results.map((char: Character) => (
+          {characters.map((char: Character) => (
             <Link
               href={`/characters/${char.id}`}
               className="
