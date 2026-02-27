@@ -18,14 +18,14 @@ export default function Home() {
         <h1 className="text-4xl font-extrabold tracking-tight text-black dark:text-zinc-50">
           Rickdex
         </h1>
-        <p className="text-lg text-zinc-600 dark:text-zinc-400">
+        <p className="text-lg text-center text-zinc-600 dark:text-zinc-400">
           Um índice limpo e moderno para os personagens, locais e episódios de
           Rick & Morty
         </p>
         <div className="mt-4 flex gap-3">
           <Link
             href="/characters"
-            className="inline-flex items-center rounded-full bg-foreground px-5 py-3 text-background font-medium hover:opacity-95"
+            className="inline-flex items-center text-center rounded-full bg-foreground px-5 py-3 text-background font-medium hover:opacity-95"
           >
             Explorar personagens
           </Link>
@@ -33,7 +33,7 @@ export default function Home() {
             href="https://github.com/pedronns/rickdex"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center rounded-full border border-black/8 px-5 py-3 text-zinc-700 dark:text-zinc-300"
+            className="inline-flex items-center text-center rounded-full border border-black/8 px-5 py-3 text-zinc-700 dark:text-zinc-300"
           >
             Código-fonte
           </Link>
