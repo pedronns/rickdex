@@ -25,6 +25,7 @@ import {
   translateDimensionName,
   translateLocationName,
 } from '@/lib/translations/pt'
+import { notFound } from 'next/navigation'
 
 interface LocationPageProps {
   params: Promise<{ id: string }>
@@ -34,10 +35,16 @@ export default async function LocationPage({ params }: LocationPageProps) {
   const resolvedParams = await params
   const id = resolvedParams.id
 
-  const location: Location = await fetch(
+  const response: Response = await fetch(
     `https://rickandmortyapi.com/api/location/${id}`,
-    { next: { revalidate: 60 } },
-  ).then((res) => res.json())
+    { next: { revalidate: 3600 } },
+  )
+
+  if (!response.ok) {
+      notFound()
+    }
+
+  const location: Location = await response.json()
 
   const createdDate = location.created
     ? new Date(location.created).toLocaleDateString('pt-BR')

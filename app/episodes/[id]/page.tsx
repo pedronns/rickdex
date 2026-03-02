@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 
 import { Character } from '@/types/character'
 import type { Episode } from '@/types/episode'
@@ -26,10 +26,11 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
   )
 
   if (!response.ok) {
-    redirect('/')
+    notFound()
   }
 
   const episode: Episode = await response.json()
+  const totalEpisodes = 51
 
   const airDate = episode.air_date
     ? new Date(episode.air_date).toLocaleDateString('pt-BR')
@@ -49,21 +50,22 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
             <div>
               <h1 className="text-5xl font-bold">{episode.name}</h1>
 
-              <p className="text-muted-foreground text-lg mt-1">
-                {translateEpisodeCode(episode.episode)}
-              </p>
-              <div className="flex gap-4">
+              <div className="flex gap-2 mt-2">
+                <p className="text-muted-foreground text-lg">
+                  {translateEpisodeCode(episode.episode)}
+                </p>
                 {episode.id > 1 && (
                   <Link
                     href={`/episodes/${episode.id - 1}`}
-                    className="flex gap-1"
+                    className="flex mt-0.5"
+                    
                   >
                     <ChevronLeftIcon />
                     Anterior
                   </Link>
                 )}
-                {episode.id < 51 && (
-                  <Link href={`/episodes/${episode.id + 1}`} className="flex">
+                {episode.id < totalEpisodes && (
+                  <Link href={`/episodes/${episode.id + 1}`} className="flex mt-0.5">
                     Próximo
                     <ChevronRightIcon />
                   </Link>

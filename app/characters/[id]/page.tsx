@@ -9,6 +9,7 @@ import {
   statusTranslation,
 } from '@/lib/translations/pt'
 import { statusColor } from '@/lib/colors'
+import { notFound } from 'next/navigation'
 
 interface CharacterPageProps {
   params: Promise<{ id: string }>
@@ -18,10 +19,16 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
   const resolvedParams = await params
   const id = resolvedParams.id
 
-  const character: Character = await fetch(
+  const response: Response = await fetch(
     `https://rickandmortyapi.com/api/character/${id}`,
-    { next: { revalidate: 60 } },
-  ).then((res) => res.json())
+    { next: { revalidate: 3600 } },
+  )
+
+  if (!response.ok) {
+    notFound()
+  }
+
+  const character: Character = await response.json()
 
   const firstAparison = await fetch(character.episode[0], {
     next: { revalidate: 60 },
