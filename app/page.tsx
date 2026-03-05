@@ -15,7 +15,7 @@ export default function Home() {
           height={128}
           quality={75}
         />
-        <h1 className="text-4xl font-extrabold tracking-tight text-black dark:text-zinc-50">
+        <h1 className="text-4xl font-extrabold tracking-tight text-primary">
           Rickdex
         </h1>
         <p className="text-lg text-center text-zinc-600 dark:text-zinc-400">

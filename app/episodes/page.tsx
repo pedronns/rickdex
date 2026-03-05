@@ -62,7 +62,7 @@ export default async function Episode({ searchParams }: Props) {
             <Link
               href={`/episodes/${episode.id}`}
               key={episode.id}
-              className="group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:scale-105 bg-card border border-border hover:border- shadow-lg hover:shadow-xl"
+              className="group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:scale-105 bg-card border border-border shadow-lg dark:shadow-primary/5 hover:shadow-xl"
             >
               <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
