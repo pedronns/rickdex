@@ -31,7 +31,7 @@ export default function RandomPage({ pageType }: { pageType?: PageType }) {
   if (!href) return null
 
   return (
-    <div className="flex justify-center" title="Página aleatória">
+    <div className="flex justify-center mx-auto bg-black/3 dark:bg-card rounded-full w-11 h-11" title="Página aleatória">
       <Link
         className="mt-2 transition duration-300 hover:scale-110"
         href={href}

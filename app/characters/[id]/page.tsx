@@ -66,11 +66,10 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
 
                 <span
                   className="
-      absolute -bottom-3 left-1/2 -translate-x-1/2
-      md:left-3 md:translate-x-0
-      inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-semibold
-      bg-linear-to-r from-indigo-500 to-pink-500 text-white shadow-lg border border-white/10
-    "
+                    absolute -bottom-3 left-1/2 -translate-x-1/2
+                    md:left-3 md:translate-x-0
+                    inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-semibold
+                    bg-linear-to-r from-indigo-500 to-pink-500 text-white shadow-lg border border-white/10"
                 >
                   #{id}
                 </span>
@@ -89,11 +88,11 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
             <div className="w-full md:w-2/3">
               <div className="flex flex-wrap items-center gap-3">
                 <span
-                  className={`px-3 py-1 rounded-full text-sm ${statusColor[character.status]} bg-white/5 border border-white/6`}
+                  className={`px-3 py-1 rounded-full text-sm ${statusColor[character.status]} dark:bg-white/5 bg-black/2 border dark:border-white/6 border-black/6`}
                 >
                   {statusTranslation[character.status]}
                 </span>
-                <span className="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/6 ">
+                <span className="px-3 py-1 rounded-full text-sm dark:bg-white/5 bg-black/2 border dark:border-white/6 border-black/6 ">
                   {originTranslation[character.origin?.name] ||
                     translateLocationName(character.origin?.name) ||
                     character.origin?.name}
@@ -101,14 +100,14 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
               </div>
 
               <div className="mt-6 grid grid-cols-2 gap-4">
-                <div className="bg-white/3 p-4 rounded-lg">
+                <div className="dark:bg-white/3 bg-black/3 p-4 rounded-lg">
                   <p className="text-xs">Localização</p>
                   <p className="font-semibold ">
                     {translateLocationName(character.location?.name) ||
                       character.location?.name}
                   </p>
                 </div>
-                <div className="bg-white/3 p-4 rounded-lg">
+                <div className="dark:bg-white/3 bg-black/3 p-4 rounded-lg">
                   <p className="text-xs ">Episódios</p>
                   <p className="font-semibold ">
                     {character.episode?.length || 0}
@@ -121,7 +120,7 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
                   Sobre
                 </h2>
                 <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="bg-white/3 p-4 rounded-lg">
+                  <div className="dark:bg-white/3 bg-black/3 p-4 rounded-lg">
                     <p className="text-xs ">Espécie</p>
                     <p className="font-semibold">
                       {speciesTranslation[character.species] ||
@@ -129,19 +128,19 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
                     </p>
                   </div>
 
-                  <div className="bg-white/3 p-4 rounded-lg">
+                  <div className="dark:bg-white/3 bg-black/3 p-4 rounded-lg">
                     <p className="text-xs ">Gênero</p>
                     <p className="font-semibold ">
                       {genderTranslation[character.gender] || character.gender}
                     </p>
                   </div>
 
-                  <div className="bg-white/3 p-4 rounded-lg">
+                  <div className="dark:bg-white/3 bg-black/3 p-4 rounded-lg">
                     <p className="text-xs ">Tipo</p>
                     <p className="font-semibold ">{character.type || 'N/A'}</p>
                   </div>
 
-                  <div className="bg-white/3 p-4 rounded-lg">
+                  <div className="dark:bg-white/3 bg-black/3 p-4 rounded-lg">
                     <p className="text-xs ">Criado em</p>
                     <p className="font-semibold ">{createdDate}</p>
                   </div>

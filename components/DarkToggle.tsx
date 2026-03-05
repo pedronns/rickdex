@@ -34,7 +34,7 @@ export default function ThemeToggle() {
   }, [])
 
   return (
-    <button className="cursor-pointer transition" onClick={toggleTheme}>
+    <button className="cursor-pointer transition" onClick={toggleTheme} title={isDark ? 'Modo Claro' : 'Modo Escuro'}>
       {isDark ? (
         <MoonIcon color="#ccc" className="duration-300 hover:rotate-[-15deg]" />
       ) : (

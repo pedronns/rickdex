@@ -55,7 +55,7 @@ export default async function Page({ searchParams }: Props) {
   return (
     <div className="px-6 py-12">
       <div>
-        <div className="mb-12">
+        <div className="mb-12 align-center">
           <h1 className="text-5xl font-bold mb-2 text-center">Personagens</h1>
           {currentPage > 1 && (
             <p className="text-center text-muted-foreground text-lg">
@@ -65,7 +65,7 @@ export default async function Page({ searchParams }: Props) {
           <div className="mx-auto w-75 max-w-md my-4">
             <SearchBar />
           </div>
-          <RandomPage pageType="character" />
+            <RandomPage pageType="character" />
         </div>
 
         <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -82,6 +82,7 @@ export default async function Page({ searchParams }: Props) {
                 duration-300
                 hover:scale-105
               dark:bg-brand-deep
+                bg-black/1
               "
               key={char.id}
             >
