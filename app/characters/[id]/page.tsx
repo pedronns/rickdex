@@ -132,7 +132,7 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
                   <div className="bg-white/3 p-4 rounded-lg">
                     <p className="text-xs ">Gênero</p>
                     <p className="font-semibold ">
-                      {genderTranslation[character.gender] || character.species}
+                      {genderTranslation[character.gender] || character.gender}
                     </p>
                   </div>
 

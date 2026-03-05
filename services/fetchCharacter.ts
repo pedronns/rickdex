@@ -1,4 +1,4 @@
-import characters from '@/data/characters.json'
+import characters from '../public/data/characters.json'
 import { SimpleCharacter } from '@/types/character'
 
 export function fetchCharacter(id: number): SimpleCharacter | null {

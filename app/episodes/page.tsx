@@ -78,11 +78,11 @@ export default async function Episode({ searchParams }: Props) {
 
                 <div className="space-y-3 pt-2">
                   <div className="flex items-start gap-3">
-                    <span className="text-sm font-semibold text-muted-foreground min-w-fit">
+                    <span className="text-sm font-semibold text-muted-foreground min-w-fit mt-1">
                       Lançamento:
                     </span>
                     <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary">
-                      {episode.air_date}
+                      {new Date(episode.air_date).toLocaleDateString('pt-BR')}
                     </span>
                   </div>
                 </div>

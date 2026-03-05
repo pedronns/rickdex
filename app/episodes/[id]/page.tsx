@@ -58,14 +58,16 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
                   <Link
                     href={`/episodes/${episode.id - 1}`}
                     className="flex mt-0.5"
-                    
                   >
                     <ChevronLeftIcon />
                     Anterior
                   </Link>
                 )}
                 {episode.id < totalEpisodes && (
-                  <Link href={`/episodes/${episode.id + 1}`} className="flex mt-0.5">
+                  <Link
+                    href={`/episodes/${episode.id + 1}`}
+                    className="flex mt-0.5"
+                  >
                     Próximo
                     <ChevronRightIcon />
                   </Link>
@@ -77,10 +79,8 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
           {/* Left Column - Episode Info */}
-          <div className="lg:col-span-1">
-            <div
-              className={`bg-linear-to-br rounded-2xl p-8 text-white shadow-xl mb-6`}
-            >
+          <div className="lg:col-span-1 ">
+            <div className='bg-linear-to-br rounded-2xl dark:bg-card p-8 shadow-xl mb-6'>
               <p className="text-sm font-semibold uppercase tracking-wider opacity-90 mb-2">
                 Personagens
               </p>

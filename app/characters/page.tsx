@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import SearchBar from '@/components/SearchBar'
 
 import type { Character, CharacterResponse } from '@/types/character'
 
@@ -61,6 +62,9 @@ export default async function Page({ searchParams }: Props) {
               Página {currentPage} de {totalPages}
             </p>
           )}
+          <div className="mx-auto w-75 max-w-md my-4">
+            <SearchBar />
+          </div>
           <RandomPage pageType="character" />
         </div>
 

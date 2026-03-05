@@ -6,7 +6,7 @@ import Link from 'next/link'
 export default function Home() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="w-full max-w-3xl flex flex-col items-center justify-center gap-6 py-24 px-8 bg-white dark:bg-black rounded-lg shadow-sm">
+      <main className="w-full max-w-3xl flex flex-col items-center justify-center gap-6 py-24 px-8 bg-white dark:bg-transparent rounded-lg shadow-sm">
         <Image
           className=" transition-transform hover:scale-105"
           src={icon}
@@ -25,7 +25,7 @@ export default function Home() {
         <div className="mt-4 flex gap-3">
           <Link
             href="/characters"
-            className="inline-flex items-center text-center rounded-full bg-foreground px-5 py-3 text-background font-medium hover:opacity-95"
+            className="inline-flex items-center text-center text-background text-sm md:text-md md:font-medium font-semibold rounded-full bg-foreground px-5 py-3 hover:opacity-95"
           >
             Explorar personagens
           </Link>
@@ -33,12 +33,12 @@ export default function Home() {
             href="https://github.com/pedronns/rickdex"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center text-center rounded-full border border-black/8 px-5 py-3 text-zinc-700 dark:text-zinc-300"
+            className="inline-flex items-center text-center text-zinc-700 text-sm md:text-md md:font-medium font-semibold rounded-full border border-black/8 px-5 py-3  dark:text-zinc-300"
           >
             Código-fonte
           </Link>
         </div>
-            <RandomPage />
+        <RandomPage />
       </main>
     </div>
   )
