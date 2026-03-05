@@ -13,10 +13,19 @@ export default function ThemeToggle() {
   useEffect(() => {
     const html = document.documentElement
 
+    const saved = localStorage.getItem('darkMode')
+    if (saved !== null) {
+      const shouldBeDark = saved === 'true'
+      html.classList.toggle('dark', shouldBeDark)
+    }
+
     setIsDark(html.classList.contains('dark'))
 
     const observer = new MutationObserver(() => {
-      setIsDark(html.classList.contains('dark'))
+      const dark = html.classList.contains('dark')
+      setIsDark(dark)
+
+      localStorage.setItem('darkMode', dark.toString())
     })
 
     observer.observe(html, { attributes: true, attributeFilter: ['class'] })
@@ -25,10 +34,7 @@ export default function ThemeToggle() {
   }, [])
 
   return (
-    <button
-      className="cursor-pointer transition"
-      onClick={toggleTheme}
-    >
+    <button className="cursor-pointer transition" onClick={toggleTheme}>
       {isDark ? (
         <MoonIcon color="#ccc" className="duration-300 hover:rotate-[-15deg]" />
       ) : (
