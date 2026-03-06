@@ -7,7 +7,9 @@ import {
   originTranslation,
   speciesTranslation,
   statusTranslation,
+  translateEpisodeCode
 } from '@/lib/translations/pt'
+
 import { statusColor } from '@/lib/colors'
 import { notFound } from 'next/navigation'
 
@@ -150,7 +152,7 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
                   <div className="text-xs ">
                     <p className="mb-2">Primeira aparição</p>
                     <p className="font-semibold ">
-                      {firstAparison?.episode}
+                      {translateEpisodeCode(firstAparison?.episode)}
                       {' • '}
                       {firstAparison?.name}
                     </p>
@@ -158,7 +160,7 @@ export default async function CharacterPage({ params }: CharacterPageProps) {
                   <div className="text-xs">
                     <p className="mb-2">Última aparição</p>
                     <p className="font-semibold ">
-                      {latestAparison?.episode}
+                      {translateEpisodeCode(latestAparison?.episode)}
                       {' • '}
                       {latestAparison?.name}
                     </p>
