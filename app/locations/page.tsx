@@ -20,7 +20,6 @@ import {
   translateLocationName,
 } from '@/lib/translations/pt'
 
-
 type Props = {
   searchParams: Promise<{
     page?: string

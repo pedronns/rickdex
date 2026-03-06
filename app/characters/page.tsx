@@ -65,46 +65,40 @@ export default async function Page({ searchParams }: Props) {
           <div className="mx-auto w-75 max-w-md my-4">
             <SearchBar />
           </div>
-            <RandomPage pageType="character" />
+          <RandomPage pageType="character" />
         </div>
 
-        <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {characters.map((char: Character) => (
             <Link
               href={`/characters/${char.id}`}
-              className="
-                cursor-pointer
-                overflow-hidden
-                rounded-2xl
-                p-3
-                shadow-md
-                transition
-                duration-300
-                hover:scale-105
-              dark:bg-brand-deep
-                bg-black/1
-              "
               key={char.id}
+              className="group lg:flex relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:scale-105 bg-card border border-border shadow-lg hover:shadow-xl"
             >
               <Image
-                className="w-75 mt-2 mx-auto h-auto rounded-full"
+                className="w-50  md:w-75 lg:w-48 mt-2 mx-auto h-auto rounded-full"
                 src={`/avatars/${char.id}.jpg`}
                 loading="lazy"
                 alt={char.name}
                 width={150}
                 height={200}
               />
-              <p className="pt-4 text-lg font-semibold text-center">
-                {char.name}
-              </p>
-              <p className="text-md font-semibold text-gray-500 text-center">
-                {speciesTranslation[char.species] || char.species}
-              </p>
-              <p
-                className={`text-sm font-semibold text-center ${statusColor[char.status]}`}
-              >
-                {statusTranslation[char.status]}
-              </p>
+              <div className="flex flex-col justify-between">
+                <h2 className="text-2xl font-bold group-hover:text-primary transition-colors text-center">
+                  {char.name}
+                </h2>
+                <div>
+                  <p className="text-md font-semibold text-gray-500 text-center">
+                    {speciesTranslation[char.species] || char.species}
+                  </p>
+                  <p
+                    className={`text-sm font-semibold text-center ${statusColor[char.status]}`}
+                  >
+                    {statusTranslation[char.status]}
+                  </p>
+                </div>
+              </div>
+              <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </Link>
           ))}
         </div>
