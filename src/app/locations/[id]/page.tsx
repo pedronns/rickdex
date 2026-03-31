@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { fetchCharacter } from '@/services/fetchCharacter'
+import { fetchSimpleCharacter } from '@/services/fetchSimpleCharacter'
 
 import { Character } from '@/types/character'
 import type { Location } from '@/types/location'
@@ -26,6 +26,7 @@ import {
   translateLocationName,
 } from '@/lib/translations/pt'
 import { notFound } from 'next/navigation'
+import { fetchID } from '@/services/fetchID'
 
 interface LocationPageProps {
   params: Promise<{ id: string }>
@@ -33,12 +34,9 @@ interface LocationPageProps {
 
 export default async function LocationPage({ params }: LocationPageProps) {
   const resolvedParams = await params
-  const id = resolvedParams.id
+  const id = Number(resolvedParams.id)
 
-  const response: Response = await fetch(
-    `https://rickandmortyapi.com/api/location/${id}`,
-    { next: { revalidate: 3600 } },
-  )
+  const response: Response = await fetchID(id, 'location')
 
   if (!response.ok) {
       notFound()
@@ -68,7 +66,7 @@ export default async function LocationPage({ params }: LocationPageProps) {
   const residentsCount = location.residents?.length || 0
 
   const residents = location.residents
-    .map((url) => fetchCharacter(getIdFromUrl(url)))
+    .map((url) => fetchSimpleCharacter(getIdFromUrl(url)))
     .filter(Boolean) as Character[]
 
   return (

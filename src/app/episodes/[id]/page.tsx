@@ -7,10 +7,11 @@ import type { Episode } from '@/types/episode'
 
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 
-import { fetchCharacter } from '@/services/fetchCharacter'
+import { fetchSimpleCharacter } from '@/services/fetchSimpleCharacter'
 import { translateEpisodeCode } from '@/lib/translations/pt'
 import { getIdFromUrl } from '@/lib/utils'
 import { statusDotColor } from '@/lib/colors'
+import { fetchID } from '@/services/fetchID'
 
 interface EpisodePageProps {
   params: Promise<{ id: string }>
@@ -18,12 +19,9 @@ interface EpisodePageProps {
 
 export default async function EpisodePage({ params }: EpisodePageProps) {
   const resolvedParams = await params
-  const id = resolvedParams.id
+  const id = Number(resolvedParams.id)
 
-  const response: Response = await fetch(
-    `https://rickandmortyapi.com/api/episode/${id}`,
-    { next: { revalidate: 3600 } },
-  )
+  const response: Response = await fetchID(id, 'episode')
 
   if (!response.ok) {
     notFound()
@@ -39,7 +37,7 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
   const charactersCount = episode.characters?.length ?? 0
 
   const presentCharacters = episode.characters
-    .map((url) => fetchCharacter(getIdFromUrl(url)))
+    .map((url) => fetchSimpleCharacter(getIdFromUrl(url)))
     .filter(Boolean) as Character[]
 
   return (

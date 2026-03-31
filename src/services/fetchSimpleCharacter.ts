@@ -7,6 +7,7 @@ import characters from '@public/data/characters.json'
   status: string
 }
 
-export function fetchCharacter(id: number): SimpleCharacter | null {
+
+export function fetchSimpleCharacter(id: number): SimpleCharacter | null {
   return characters[id - 1] || null
 }
