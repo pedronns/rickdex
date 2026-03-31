@@ -1,4 +1,4 @@
-export type LocationResponse = {
+export type LocationsResponse = {
   info: {
     count: number
     pages: number

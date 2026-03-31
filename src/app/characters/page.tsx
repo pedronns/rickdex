@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import SearchBar from '@/components/SearchBar'
 
-import type { Character, CharacterResponse } from '@/types/character'
+import type { Character, CharactersResponse } from '@/types/character'
 
 import RandomPage from '@/components/RandomPage'
 import {
@@ -18,6 +18,7 @@ import {
 
 import { statusTranslation, speciesTranslation } from '@/lib/translations/pt'
 import { statusColor } from '@/lib/colors'
+import { fetchPage } from '@/services/fetchPage'
 
 type Props = {
   searchParams: Promise<{
@@ -30,12 +31,7 @@ export default async function Page({ searchParams }: Props) {
 
   const currentPage = Number(params.page ?? 1)
 
-  const data: CharacterResponse = await fetch(
-    `https://rickandmortyapi.com/api/character?page=${currentPage}`,
-    {
-      next: { revalidate: 3600 },
-    },
-  ).then((res) => res.json())
+  const data: CharactersResponse = await fetchPage('character', currentPage)
 
   const characters = data.results
 
@@ -53,42 +49,42 @@ export default async function Page({ searchParams }: Props) {
   )
 
   return (
-    <div className="px-6 py-12">
+    <div className='px-6 py-12'>
       <div>
-        <div className="mb-12 align-center">
-          <h1 className="text-5xl font-bold mb-2 text-center">Personagens</h1>
+        <div className='mb-12 align-center'>
+          <h1 className='text-5xl font-bold mb-2 text-center'>Personagens</h1>
           {currentPage > 1 && (
-            <p className="text-center text-muted-foreground text-lg">
+            <p className='text-center text-muted-foreground text-lg'>
               Página {currentPage} de {totalPages}
             </p>
           )}
-          <div className="mx-auto w-75 max-w-md my-4">
+          <div className='mx-auto w-75 max-w-md my-4'>
             <SearchBar />
           </div>
-          <RandomPage pageType="character" />
+          <RandomPage pageType='character' />
         </div>
 
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
           {characters.map((char: Character) => (
             <Link
               href={`/characters/${char.id}`}
               key={char.id}
-              className="group lg:flex relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:scale-105 bg-card border border-border shadow-lg hover:shadow-xl"
+              className='group lg:flex relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:scale-105 bg-card border border-border shadow-lg hover:shadow-xl'
             >
               <Image
-                className="w-50  md:w-75 lg:w-48 mt-2 mx-auto h-auto rounded-full"
+                className='w-50  md:w-75 lg:w-48 mt-2 mx-auto h-auto rounded-full'
                 src={`/avatars/${char.id}.jpg`}
-                loading="lazy"
+                loading='lazy'
                 alt={char.name}
                 width={150}
                 height={200}
               />
-              <div className="flex flex-col justify-between">
-                <h2 className="text-2xl font-bold group-hover:text-primary transition-colors text-center">
+              <div className='flex flex-col justify-between'>
+                <h2 className='text-2xl font-bold group-hover:text-primary transition-colors text-center'>
                   {char.name}
                 </h2>
                 <div>
-                  <p className="text-md font-semibold text-gray-500 text-center">
+                  <p className='text-md font-semibold text-gray-500 text-center'>
                     {speciesTranslation[char.species] || char.species}
                   </p>
                   <p
@@ -98,13 +94,13 @@ export default async function Page({ searchParams }: Props) {
                   </p>
                 </div>
               </div>
-              <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className='absolute inset-0 bg-linear-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
             </Link>
           ))}
         </div>
 
-        <Pagination className="mx-auto mt-8">
-          <PaginationFirst href="?page=1" />
+        <Pagination className='mx-auto mt-8'>
+          <PaginationFirst href='?page=1' />
           <PaginationContent>
             {currentPage > 1 && (
               <PaginationItem>

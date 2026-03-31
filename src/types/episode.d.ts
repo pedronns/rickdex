@@ -1,4 +1,4 @@
-export type EpisodeResponse = {
+export type EpisodesResponse = {
   info: {
     count: number
     pages: number

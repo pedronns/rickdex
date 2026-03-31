@@ -1,4 +1,4 @@
-import icon from '../app/icon.png'
+import icon from '@/app/icon.png'
 import Image from 'next/image'
 import RandomPage from '@/components/RandomPage'
 import Link from 'next/link'

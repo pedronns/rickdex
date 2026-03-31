@@ -1,4 +1,4 @@
-export type CharacterResponse = {
+export type CharactersResponse = {
   info: {
     count: number
     pages: number

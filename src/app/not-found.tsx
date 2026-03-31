@@ -1,4 +1,4 @@
-import icon from '../../app/icon.png'
+import icon from '@/app/icon.png'
 import Image from 'next/image'
 import RandomPage from '@/components/RandomPage'
 import Link from 'next/link'
@@ -19,17 +19,17 @@ export default function NotFound() {
           404
         </h1>
         <p className="text-lg text-center text-zinc-600 dark:text-zinc-400">
-          Não foi possível encontrar o episódio requisitado
+          Não foi possível encontrar a página requisitada
         </p>
         <div className="mt-4 flex gap-3">
           <Link
-            href="/episodes"
+            href="/"
             className="inline-flex items-center text-center rounded-full bg-foreground px-5 py-3 text-background font-medium hover:opacity-95"
           >
-            Voltar para episódios
+            Voltar para página inicial
           </Link>
         </div>
-            <RandomPage pageType='episode' />
+            <RandomPage />
       </main>
     </div>
   )
