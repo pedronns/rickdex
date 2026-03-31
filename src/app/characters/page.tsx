@@ -64,12 +64,12 @@ export default async function Page({ searchParams }: Props) {
           <RandomPage pageType='character' />
         </div>
 
-        <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+        <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:w-[90%] mx-auto '>
           {characters.map((char: Character) => (
             <Link
               href={`/characters/${char.id}`}
               key={char.id}
-              className='group flex flex-row justify-between relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:scale-105 bg-card border border-border shadow-lg hover:shadow-xl'
+              className='group flex  flex-row justify-between relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:scale-105 bg-card border border-border shadow-lg hover:shadow-xl'
             >
               <Image
                 className='w-50  md:w-75 lg:w-48 mt-2 h-auto rounded-full'
@@ -84,7 +84,7 @@ export default async function Page({ searchParams }: Props) {
                   {char.name}
                 </h2>
                 <div>
-                  <p className='text-md font-semibold text-gray-500 text-right'>
+                  <p className='text-md font-semibold text-wrap text-gray-500 text-right'>
                     {speciesTranslation[char.species] || char.species}
                   </p>
                   <p
