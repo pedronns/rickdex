@@ -17,7 +17,7 @@ export async function fetchPage<T extends keyof EndpointMap>(
   )
 
   if (!res.ok) {
-    throw new Error(`Failed to fetch ${endpoint} page ${page}`)
+    throw new Error(`Failed to fetch ${endpoint}s from page ${page}`)
   }
 
   const data = (await res.json()) as EndpointMap[T]

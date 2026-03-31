@@ -1,5 +1,11 @@
 import characters from '@public/data/characters.json'
-import { SimpleCharacter } from '@/types/character'
+
+ type SimpleCharacter = {
+  id: number
+  name: string
+  image: string
+  status: string
+}
 
 export function fetchCharacter(id: number): SimpleCharacter | null {
   return characters[id - 1] || null

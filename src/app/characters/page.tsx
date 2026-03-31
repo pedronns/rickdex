@@ -69,26 +69,26 @@ export default async function Page({ searchParams }: Props) {
             <Link
               href={`/characters/${char.id}`}
               key={char.id}
-              className='group lg:flex relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:scale-105 bg-card border border-border shadow-lg hover:shadow-xl'
+              className='group flex flex-row justify-between relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:scale-105 bg-card border border-border shadow-lg hover:shadow-xl'
             >
               <Image
-                className='w-50  md:w-75 lg:w-48 mt-2 mx-auto h-auto rounded-full'
+                className='w-50  md:w-75 lg:w-48 mt-2 h-auto rounded-full'
                 src={`/avatars/${char.id}.jpg`}
                 loading='lazy'
                 alt={char.name}
                 width={150}
                 height={200}
               />
-              <div className='flex flex-col justify-between'>
-                <h2 className='text-2xl font-bold group-hover:text-primary transition-colors text-center'>
+              <div className='flex flex-col justify-between h-full'>
+                <h2 className='text-2xl font-bold group-hover:text-primary transition-colors text-right'>
                   {char.name}
                 </h2>
                 <div>
-                  <p className='text-md font-semibold text-gray-500 text-center'>
+                  <p className='text-md font-semibold text-gray-500 text-right'>
                     {speciesTranslation[char.species] || char.species}
                   </p>
                   <p
-                    className={`text-sm font-semibold text-center ${statusColor[char.status]}`}
+                    className={`text-sm font-semibold text-right ${statusColor[char.status]}`}
                   >
                     {statusTranslation[char.status]}
                   </p>

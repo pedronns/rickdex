@@ -74,6 +74,10 @@ export const locationNameSuffixTranslation: Record<string, string> = {
 }
 
 export function translateLocationName(name: string) {
+  if(name == 'unknown') {
+    return 'Desconhecida'
+  }
+
   const match = name.match(/^(.+?)(\s*\((.*)\))?$/)
   if (!match) return name
 
