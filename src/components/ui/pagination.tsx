@@ -57,9 +57,12 @@ function PaginationLink({
       data-active={isActive}
       className={cn(
         buttonVariants({
-          variant: isActive ? "outline" : "ghost",
+          variant: isActive ? "outline" : "dark",
           size,
         }),
+        isActive
+          ? "pointer-events-none cursor-pointer border-primary bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 dark:border-primary/80 dark:bg-primary/90 dark:text-primary-foreground"
+          : "border border-transparent hover:border-primary hover:bg-transparent dark:hover:border-primary/80",
         className
       )}
       {...props}
@@ -92,6 +95,7 @@ function PaginationFirst({
     <PaginationLink
       aria-label="Go to first page"
       size="default"
+      title="Ir para o início"  
       className={cn("gap-1 px-2.5 sm:pl-2.5", className)}
       {...props}
     >
@@ -106,8 +110,9 @@ function PaginationLast({
 }: React.ComponentProps<typeof PaginationLink>) {
   return (
     <PaginationLink
-      aria-label="Go to last page"
-      size="default"
+    aria-label="Go to last page"
+    size="default"
+    title="Ir para o fim"  
       className={cn("gap-1 px-2.5 sm:pl-2.5", className)}
       {...props}
     >
