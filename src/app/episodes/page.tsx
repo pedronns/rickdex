@@ -96,13 +96,16 @@ export default async function Episode({ searchParams }: Props) {
           ))}
         </div>
 
-        <Pagination className="mx-auto">
-          <PaginationFirst href="?page=1" />
+        <Pagination className='mx-auto mt-8'>
           <PaginationContent>
             {currentPage > 1 && (
-              <PaginationItem>
-                <PaginationPrevious href={`?page=${currentPage - 1}`} />
-              </PaginationItem>
+              <div className='flex'>
+                <PaginationFirst href='?page=1' />
+
+                <PaginationItem>
+                  <PaginationPrevious href={`?page=${currentPage - 1}`} />
+                </PaginationItem>
+              </div>
             )}
 
             {pages.map((pageNum) => (
@@ -116,12 +119,15 @@ export default async function Episode({ searchParams }: Props) {
               </PaginationItem>
             ))}
 
-            {currentPage < data.info.pages && (
-              <PaginationItem>
+             {currentPage < data.info.pages && (
+              <div className='flex flex-row'>
                 <PaginationNext href={`?page=${currentPage + 1}`} />
-              </PaginationItem>
+                
+                <PaginationItem>
+                  <PaginationLast href={`?page=${totalPages}`} />
+                </PaginationItem>
+              </div>
             )}
-            <PaginationLast href={`?page=${totalPages}`} />
           </PaginationContent>
         </Pagination>
       </div>
