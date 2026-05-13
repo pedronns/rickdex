@@ -63,8 +63,8 @@ const darkStyles: StylesConfig<Option> = {
       content: '" "',
       display: 'block',
       marginRight: 8,
-      height: 36,
-      width: 36,
+      height: 48,
+      width: 48,
     },
   }),
   singleValue: (base) => ({
@@ -225,7 +225,7 @@ export default function SearchDropdown() {
         onInputChange={(value) => setInputValue(value)}
         filterOption={(option, input) =>
           inputValue.length > 0 &&
-          option.label.toLowerCase().startsWith(input.toLowerCase())
+          option.label.toLowerCase().includes(input.toLowerCase())
         }
         noOptionsMessage={() =>
           inputValue.length > 0 ? 'Nenhum resultado encontrado' : null
